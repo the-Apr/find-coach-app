@@ -7,7 +7,7 @@ export default {
           id: 'c1',
           firstName: 'Maximilian',
           lastName: 'Schwarzmüller',
-          areas: ['frontend', 'backend', 'career'],
+          areas: ['frontend', 'backend'],
           description: "I'm Maximillian and I've worked as a freelance web developer for years. ",
           hourlyRate: 30
         },
@@ -23,7 +23,7 @@ export default {
           id: 'c3',
           firstName: 'Dwayne',
           lastName: 'Johnson',
-          areas: ['frontend', 'backend', 'career'],
+          areas: ['frontend','career'],
           description: "I'm Dwayne and I've worked as a freelance app developer for years. ",
           hourlyRate: 40
         }   

@@ -1,4 +1,5 @@
 <template>
+  <div>
   <form action="" @submit.prevent="submitForm">
     <div class="form-control">
       <label for="email">Your E-mail</label>
@@ -13,6 +14,7 @@
       <base-button>Send Message</base-button>
     </div>
   </form>
+  </div>
 </template>
 
 <script>
@@ -34,7 +36,7 @@ export default{
       this.$store.dispatch('requests/contactCoach', {
         email: this.email,
         message: this.message,
-        coachId: this.$route.id
+        coachId: this.$route.params.id
       });
       this.$router.replace('/coaches')
     }

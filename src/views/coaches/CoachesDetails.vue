@@ -1,8 +1,9 @@
 <template>
+  <div>
   <section>
     <base-card>
-    <h2>{{ fullName }}</h2>
-    <h3>${{ rate }}/hour</h3>
+      <h2>{{ fullName }}</h2>
+      <h3>${{ rate }}/hour</h3>
     </base-card>
   </section>
   <section>
@@ -20,6 +21,7 @@
       <p>{{ description }}</p>
     </base-card>
   </section>
+</div>
 </template>
 
 <script>
@@ -33,7 +35,7 @@ export default{
   computed: {
     
     fullName() {
-      return this.selectedCoach.fullName
+      return this.selectedCoach.firstName + ' ' + this.selectedCoach.lastName 
     },
     areas(){
       return this.selectedCoach.areas
@@ -45,7 +47,8 @@ export default{
       return this.selectedCoach.description
     },
     contactLink() {
-      return this.$route.path + '/' + this.id + '/contact'
+      // return this.$route.path + '/contact'
+      return { name: 'contact-coach' };
     }
   },
   created() {

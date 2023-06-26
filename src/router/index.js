@@ -30,6 +30,19 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
+
+// navigation guard
+// router.beforeEach((to, from, next) => {
+//   if (to.name === 'contact-coach') {
+//     if (to.path === from.path) {
+//       next(false); // Prevent navigation
+//     } else {
+//       next(); // Allow navigation
+//     }
+//   } else {
+//     next(); // Allow navigation for other routes
+//   }
+// });
 
 export default router

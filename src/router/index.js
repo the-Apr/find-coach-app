@@ -4,7 +4,9 @@ import CoachesList from '../views/coaches/CoachesList.vue';
 import CoachesRegister from '../views/coaches/CoachesRegistration.vue';
 import ContactCoach from '../views/requests/ContactCoach.vue';
 import RequestReceived from '../views/requests/RequestReceived.vue';
-import NotFound from '../views/NotFound.vue'
+import NotFound from '../views/NotFound.vue';
+import UserAuth from '../views/auth/UserAuth.vue'
+import store from '../store/modules/index'
 
 const routes = [
   { path: '/', redirect: '/coaches' },
@@ -21,8 +23,9 @@ const routes = [
       }
     ]
   },
-  { path: '/register', name: 'coaches-register', component: CoachesRegister },
-  { path: '/requests', name: 'requests', component: RequestReceived },
+  { path: '/register', name: 'coaches-register', component: CoachesRegister, meta: { requiresAuth: true} },
+  { path: '/requests', name: 'requests', component: RequestReceived, meta: { requiresAuth: true} },
+  {path: '/auth', name: 'auth', component: UserAuth , meta: { requiresUnauth: true}},
   { path: '/:notFound(.*)', name: 'notFound', component: NotFound }
   
 ]
@@ -30,6 +33,16 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+});
+
+router.beforeEach(function(to, _, next){
+  if (to.meta.requiresAuth && !store.getters['auth/isAuthenticated'] ) {
+    next('/auth');
+  } else if (to.meta.requiresUnauth && store.getters['auth/isAuthenticated'] ) {
+      next('/coaches');
+  } else{
+    next();
+  }
 });
 
 // navigation guard

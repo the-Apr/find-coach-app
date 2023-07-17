@@ -21,11 +21,13 @@ export default{
       default: null
     },
     to: {
-      type: String,
+      type: [String, Object],
       required: false,
       default: '/'
     }
-  }
+  },
+
+  
 }
 </script>
 

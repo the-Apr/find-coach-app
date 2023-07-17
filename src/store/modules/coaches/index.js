@@ -48,9 +48,8 @@ export default {
 
   actions: {
     async registerCoach(context, data) {
-      const userId = context.rootGetters.userId;
+      const userId = context.rootGetters['auth/userId'];
       const coachData = {
-       
         firstName: data.first,
         lastName: data.last,
         description: data.desc,
@@ -58,18 +57,20 @@ export default {
         areas: data.areas
       };
 
-      const response = await fetch(`https://find-coach-app-8d378-default-rtdb.firebaseio.com/coaches/${userId}.json`, {
+      const token = context.rootGetters['auth/token'];
+
+      const response = await fetch(`https://find-coach-app-8d378-default-rtdb.firebaseio.com/coaches/${userId}.json?auth=` + token, {
         method: 'PUT',
         body: JSON.stringify(coachData)
       });
 
-      //const responseData = await response.json();
+      const responseData = await response.json();
 
       if (!response.ok){
-        const error = newError(responseData.message || 'Failed to Fetch');
+        const error = new Error(responseData.message || 'Failed to Register Coach. Ensure you are logged in');
         throw error
       }
-
+      
       // context.commit('registerCoach',coachData)
 
       context.commit('registerCoach', {

@@ -23,7 +23,6 @@ export default {
       
       const newRequest = {
         id: new Date().toISOString(),
-      
         userEmail: payload.email,
         message: payload.message
       };
@@ -47,8 +46,10 @@ export default {
     },
 
     async loadRequest(context){
-      const coachId = context.rootGetters.userId;
-      const response = await fetch(`https://find-coach-app-8d378-default-rtdb.firebaseio.com/requests/${coachId}.json`);
+      const coachId = context.rootGetters['auth/userId'];
+      const token = context.rootGetters['auth/token'];
+      
+      const response = await fetch(`https://find-coach-app-8d378-default-rtdb.firebaseio.com/requests/${coachId}.json?auth=` + token);
 
       const responseData = await response.json();
 
@@ -56,6 +57,7 @@ export default {
        const error = new Error(responseData.message || 'Failed to fetch request');
        throw error;
       }
+      
 
       const requests = [];
 
@@ -75,8 +77,8 @@ export default {
 
 
   getters: {
-    requests(state,_, _2, rootGetters){
-      const coachId= rootGetters.userId;
+    requests(state, _, _2, rootGetters){
+      const coachId= rootGetters['auth/userId'];
       return state.requests.filter(req => req.coachId === coachId);
     },
     hasRequests(_, getters) {
